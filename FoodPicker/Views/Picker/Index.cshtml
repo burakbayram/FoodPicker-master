@@ -1,0 +1,91 @@
+﻿@using Entity
+@model  IEnumerable<Food>
+
+@{
+    ViewBag.Title = "Index";
+    int i = 0;
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<div class="widget has-shadow">
+    <div class="widget-header bordered no-actions d-flex align-items-center">
+        <h4>Food Table List</h4>
+    </div>
+    <div class="widget-body">
+        <div class="table-responsive">
+            <table id="sorting-table" class="table mb-0">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Food Name</th>
+                        <th>Restaurant</th>
+                        <th>Price</th>
+                        <th>Healty</th>
+                        <th><span style="width:100px;">Food Type</span></th>
+                    </tr>
+                </thead>
+                <tbody class="checkthis1">
+                    @foreach (var food in Model)
+                    {
+                        <tr>
+                            <td><input type="checkbox" class="checkthis" data-pid="@food.FoodName" /></td>
+                            <td>@food.FoodName</td>
+                            <td>@food.Restaurant.RestaurantName</td>
+                            <td>@food.Price</td>
+                            <td>
+                                @if (food.IsHealty)
+                                {
+                                    <span class="la la-heart-o"></span>
+                                }
+                            </td>
+                            <td><span style="width:100px;"><span class="badge-text badge-text-small info">@food.FoodType</span></span></td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <button class="btn">Seç</button>
+            <input class=" selectedFood" />
+        </div>
+        <span style="margin:100px;">
+            @*@ViewBag.RandomFood*@
+            @*@ViewBag.HealthyRandomFood*@
+        </span>
+    </div>
+</div>
+
+<script>
+
+    var liste = []
+    $(document).ready(function () {
+        $(".btn").click(function () {
+            $('input[type="checkbox"]').each(function () {
+
+                if (this.checked) {
+                    var food = $(this).attr("data-pid");
+                    liste.push(food)
+                }
+
+            })
+            var selected = liste[Math.floor((Math.random() * liste.length - 1))]
+            $(".selectedFood").val(selected)
+        })
+    })
+
+
+    //$(document).ready(function () {
+    //    $("#mytable #checkall").click(function () {
+    //        if ($("#mytable #checkall").is(':checked')) {
+    //            $("#mytable input[type=checkbox]").each(function () {
+    //                $(this).prop("checked", true);
+    //            });
+
+    //        } else {
+    //            $("#mytable input[type=checkbox]").each(function () {
+    //                $(this).prop("checked", false);
+    //            });
+    //        }
+    //    });
+    //    $("[data-toggle=tooltip]").tooltip();
+    //});
+
+</script>
